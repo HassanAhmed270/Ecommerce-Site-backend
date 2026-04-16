@@ -55,6 +55,22 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E8DAA609C38F4568AAB4289E2DF5514C }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5AF8595E62274291A8BF2FEF3FE71097 }}
 
+            - name: Set Azure App Settings (Environment Variables)
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az webapp config appsettings set \
+              --name Backen \
+              --resource-group ecommerce-backend-rg \
+              --settings \
+              MONGO_URI="${{ secrets.MONGO_URI }}" \
+              EMAIL_USER="${{ secrets.EMAIL_USER }}" \
+              EMAIL_PASS="${{ secrets.EMAIL_PASS }}" \
+              SECRET_KEY="${{ secrets.SECRET_KEY }}" \
+              CLOUD_NAME="${{ secrets.CLOUD_NAME }}" \
+              API_KEY="${{ secrets.API_KEY }}" \
+              API_SECRET="${{ secrets.API_SECRET }}"
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3

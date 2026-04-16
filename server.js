@@ -10,14 +10,12 @@ require('dotenv').config();
 
 const app = express();
 
-// ✅ Azure requires this
+// ✅ Azure safe port handling
 const port = process.env.PORT || 3000;
 
-// Trust proxy (safe for Azure)
-app.set("trust proxy", 1);
-
 // -------------------- CORS --------------------
-const FRONTEND_URL = process.env.FRONTEND_URL;
+// ✅ keep dynamic (from env)
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
 
 app.use(cors({
   origin: FRONTEND_URL,
@@ -37,6 +35,11 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/product', productRoutes);
 app.use('/api/v1/cart', cartRoutes);
 app.use('/api/v1/orders', orderRoutes);
+
+// -------------------- Health Route --------------------
+app.get('/', (req, res) => {
+  res.send('Backend Running Successfully 🚀');
+});
 
 // -------------------- START SERVER --------------------
 app.listen(port, () => {

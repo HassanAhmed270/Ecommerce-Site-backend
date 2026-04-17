@@ -7,7 +7,7 @@ const orderRoutes = require('./routes/orderRoutes.js');
 const jazzcashRoutes = require("./routes/jazzcashRoutes");
 const cors = require('cors');
 require('dotenv').config();
-
+//
 const app = express();
 
 // ✅ Azure safe port handling

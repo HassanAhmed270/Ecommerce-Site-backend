@@ -9,7 +9,7 @@ console.log("User routes loaded..."); // ✅ keep log here
 router.post('/register', register); // ✅ correct handler
 router.post('/login', login); // ✅ correct handler
 router.post('/logout',auth, logout); // ✅ correct handler
-router.post('/verify/:token', verify);
+router.post('/verify', verify);
 router.post('/reVerify', reVerify); // ✅ correct handler
 router.post('/forgot-password',auth, forgotPassword); // ✅ correct handler
 router.post('/verify-otp/:email', verifyOTP); // ✅ correct handler

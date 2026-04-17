@@ -31,10 +31,10 @@ connectDB();
 
 // -------------------- Routes --------------------
 app.use("/api/jazzcash", jazzcashRoutes);
-app.use('/api/v1/user', userRoutes);
-app.use('/api/v1/product', productRoutes);
-app.use('/api/v1/cart', cartRoutes);
-app.use('/api/v1/orders', orderRoutes);
+app.use('/user', userRoutes);
+app.use('/product', productRoutes);
+app.use('/cart', cartRoutes);
+app.use('/orders', orderRoutes);
 
 // -------------------- Health Route --------------------
 app.get('/', (req, res) => {

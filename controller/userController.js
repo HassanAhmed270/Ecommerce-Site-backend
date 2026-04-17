@@ -72,34 +72,19 @@ const register = async (req, res) => {
     }
 };
 
-// ================= VERIFY EMAIL =================
 const verify = async (req, res) => {
     try {
-        const authHeader = req.headers.authorization;
 
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            return res.status(400).json({
-                success: false,
-                message: "Authorization Token is Missing or Invalid"
-            });
-        }
-
-        const token = authHeader.split(" ")[1];
+        const token = req.params.token;
 
         let decoded;
+
         try {
             decoded = jwt.verify(token, process.env.SECRET_KEY);
         } catch (error) {
-            if (error.name === 'TokenExpiredError') {
-                return res.status(400).json({
-                    success: false,
-                    message: "The Registration Token has expired"
-                });
-            }
-
             return res.status(400).json({
                 success: false,
-                message: "Token Verification Failed"
+                message: "Invalid or expired token"
             });
         }
 
@@ -112,7 +97,6 @@ const verify = async (req, res) => {
             });
         }
 
-        // Update user
         user.token = null;
         user.isVerified = true;
         await user.save();
@@ -129,6 +113,7 @@ const verify = async (req, res) => {
         });
     }
 };
+
 
 // ================= VERIFY EMAIL =================
 const reVerify = async (req, res) => {
